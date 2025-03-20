@@ -39,26 +39,6 @@ export function RainbowButtonDemo() {
 
 
 const ThreeDCardDemo = () => {
-    const [apiData, setApiData] = useState('');
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // 替换为你的实际 API 地址
-                const response = await fetch('http://127.0.0.1:8000/api/your-data/');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                // 假设 API 返回的对象中有一个名为 'text' 的字段包含所需文本
-                setApiData(data.text);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     return (
         <CardContainer className="inter-var">
