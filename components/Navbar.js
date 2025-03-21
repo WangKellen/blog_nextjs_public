@@ -28,7 +28,7 @@ const Navbar = () => {
               AI
             </Link>
             <Link href="/family" className="text-2xl text-gray-800 dark:text-white/80 hover:text-orange-400 transition-colors duration-300 pt-1">
-              Family
+              Family💗
             </Link>
           </div>
           <div className="ml-auto flex space-x-4 items-center">

@@ -18,18 +18,6 @@ export function ParticlesBackground({ className }: ParticlesBackgroundProps) {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const loadParticles = async () => {
-      if (typeof window.particlesJS === 'undefined') {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
-        script.async = true;
-        script.onload = initParticles;
-        document.body.appendChild(script);
-      } else {
-        initParticles();
-      }
-    };
-
     const initParticles = () => {
       const isDark = theme === 'dark';
       window.particlesJS('particles-js', {
@@ -72,6 +60,18 @@ export function ParticlesBackground({ className }: ParticlesBackgroundProps) {
       });
     };
 
+    const loadParticles = async () => {
+      if (typeof window.particlesJS === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+        script.async = true;
+        script.onload = initParticles;
+        document.body.appendChild(script);
+      } else {
+        initParticles();
+      }
+    };
+
     loadParticles();
 
     return () => {
@@ -80,7 +80,7 @@ export function ParticlesBackground({ className }: ParticlesBackgroundProps) {
         particlesContainer.innerHTML = '';
       }
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div className={cn(
