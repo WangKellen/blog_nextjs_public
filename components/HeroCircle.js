@@ -49,13 +49,12 @@ const Icons = {
 
 export function OrbitingCirclesDemo() {
     return (
-        <div className="relative flex h-[550px] w-full flex-col items-center justify-center overflow-hidden">
+        <div className="relative flex h-[60vh] w-full flex-col items-center justify-center overflow-hidden">
             <OrbitingCircles iconSize={100} pathOpacity={0.3} pathDasharray="5 5" radius={200} className="stroke-black/30 dark:stroke-white/80">
-                <Icons.cola />
+                <Icons.openai />
                 <Icons.python  />
                 <Icons.django />
                 <Icons.deepseek />
-
             </OrbitingCircles>
             {/* <OrbitingCircles iconSize={30} radius={100} reverse speed={2}>
                 <Icons.openai />

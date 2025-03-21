@@ -7,16 +7,15 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { MorphingText } from "../components/magicui/morphing-text";
 import { RainbowButton } from "../components/magicui/rainbow-button";
+import Link from "next/link";
 const texts = [
-    "王大海",
+    "WangKellen",
     "产品经理",
     "半个程序员",
     "Python",
     "Django",
     "虚仿产品经理",
     "AI产品经理",
-    "半个健身达人",
-    "英雄联盟玩家",
 ];
 
 
@@ -80,7 +79,9 @@ const ThreeDCardDemo = () => {
                 <div className="flex justify-start items-end -mb-10 -ml-10">
                     <div className="w-20 h-20 bg-orange-500 rounded-full"></div>
                 </div>
-                    <RainbowButton>查看资料</RainbowButton>
+                    <Link href="/about">
+                        <RainbowButton>查看资料</RainbowButton>
+                    </Link>
                 </div>
             </CardBody>
         </CardContainer>
