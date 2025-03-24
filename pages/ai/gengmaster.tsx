@@ -36,7 +36,7 @@ export default function CozePage() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const userMessage = { role: 'user', content: input.trim() };
+    const userMessage = { role: 'user' as const, content: input.trim() };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setLoading(true);
@@ -60,12 +60,16 @@ export default function CozePage() {
         throw new Error('请求失败');
       }
 
-      const assistantMessage = { role: 'assistant', content: '' };
+      const assistantMessage = { role: 'assistant' as const, content: '' };
       setMessages(prev => [...prev, assistantMessage]);
 
       let currentMessage = '';
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
+
+      if (!reader) {
+        throw new Error('无法获取reader');
+      }
 
       try {
         while (true) {
