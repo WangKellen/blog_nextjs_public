@@ -35,71 +35,7 @@ interface Article {
   tags: string[];
 }
 
-const TableOfContents = ({ headings }: { headings: { id: string; text: string; level: number }[] }) => {
-  const [activeId, setActiveId] = useState<string>('');
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-80px 0px -80% 0px' }
-    );
-
-    headings.forEach(({ id }) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, [headings]);
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveId(id);
-    }
-  };
-
-  return (
-    <div className="p-6 bg-white/30 dark:bg-gray-800/50 backdrop-blur-lg rounded-xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
-      <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white flex items-center gap-3 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-rose-400">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-        </svg>
-        目录
-      </h3>
-      <nav>
-        <ul className="space-y-3">
-          {headings.map((heading) => (
-            <li
-              key={heading.id}
-              style={{ paddingLeft: `${(heading.level - 1) * 16}px` }}
-              className="relative group"
-            >
-              <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-orange-500 transition-opacity ${activeId === heading.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-              <a 
-                href={`#${heading.id}`}
-                onClick={(e) => handleClick(e, heading.id)}
-                className={`block py-1 transition-all duration-200 ${activeId === heading.id 
-                  ? 'text-orange-500 dark:text-orange-400 font-medium transform translate-x-1' 
-                  : 'text-gray-600 dark:text-gray-300 hover:text-orange-500 dark:hover:text-orange-400'}`}
-              >
-                {heading.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
-  );
-};
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -138,8 +74,8 @@ const ScrollToTop = () => {
 
 const BlogPost = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [showToc, setShowToc] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -168,7 +104,6 @@ const BlogPost = () => {
   const router = useRouter();
   const { id } = router.query;
   const [article, setArticle] = useState<Article | null>(null);
-  const [headings, setHeadings] = useState<{ id: string; text: string; level: number }[]>([]);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -182,23 +117,6 @@ const BlogPost = () => {
           const data = await response.json();
           setArticle(data);
 
-          // 提取标题
-          const headingRegex = /^(#{1,6})\s+(.+)$/gm;
-          const matches = data.content.matchAll(headingRegex);
-          const extractedHeadings = [];
-          for (const match of matches) {
-            const level = match[1].length;
-            // 清理标题文本中的Markdown语法
-            let text = match[2]
-              .replace(/\*\*(.+?)\*\*/g, '$1') // 移除加粗
-              .replace(/\*(.+?)\*/g, '$1')     // 移除斜体
-              .replace(/\[(.+?)\]\(.+?\)/g, '$1') // 移除链接，保留文本
-              .replace(/`(.+?)`/g, '$1')       // 移除代码
-              .trim();
-            const id = text.toLowerCase().replace(/\s+/g, '-');
-            extractedHeadings.push({ id, text, level });
-          }
-          setHeadings(extractedHeadings);
         } catch (error) {
           console.error('Error fetching article:', error);
         }
@@ -235,14 +153,6 @@ const BlogPost = () => {
           </div>
           
           <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
-            <button
-              onClick={() => setShowToc(!showToc)}
-              className="p-4 bg-white/10 dark:bg-white/5 hover:bg-white/20 dark:hover:bg-white/10 backdrop-blur-lg rounded-xl text-gray-800 dark:text-white transition-all duration-300 shadow-lg hover:shadow-xl border border-white/20"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-              </svg>
-            </button>
             
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -358,27 +268,24 @@ const BlogPost = () => {
                       );
                     },
                     h1: ({ children, ...props }) => {
-                      const id = String(children).toLowerCase().replace(/\s+/g, '-');
                       return (
-                        <h1 id={id} className="group relative" {...props}>
+                        <h1 className="group relative" {...props}>
                           <span className="absolute -left-6 opacity-0 group-hover:opacity-100 transition-opacity">#</span>
                           {children}
                         </h1>
                       );
                     },
                     h2: ({ children, ...props }) => {
-                      const id = String(children).toLowerCase().replace(/\s+/g, '-');
                       return (
-                        <h2 id={id} className="group relative" {...props}>
+                        <h2 className="group relative" {...props}>
                           <span className="absolute -left-6 opacity-0 group-hover:opacity-100 transition-opacity">#</span>
                           {children}
                         </h2>
                       );
                     },
                     h3: ({ children, ...props }) => {
-                      const id = String(children).toLowerCase().replace(/\s+/g, '-');
                       return (
-                        <h3 id={id} className="group relative" {...props}>
+                        <h3 className="group relative" {...props}>
                           <span className="absolute -left-6 opacity-0 group-hover:opacity-100 transition-opacity">#</span>
                           {children}
                         </h3>
@@ -405,15 +312,7 @@ const BlogPost = () => {
                 </ReactMarkdown>
               </motion.article>
 
-              {/* 固定位置的目录 */}
-              <motion.aside 
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className={`fixed top-24 right-4 w-64 transition-transform duration-300 ${showToc ? 'translate-x-0' : 'translate-x-[120%]'}`}
-              >
-                <TableOfContents headings={headings} />
-              </motion.aside>
+
             </div>
           </div>
       </main>

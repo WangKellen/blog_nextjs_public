@@ -1,6 +1,8 @@
 // components/BriefIntroduction.js
 import { ShineBorder } from './magicui/shine-border';
 import { motion } from 'framer-motion';
+import CircularGallery from './CircularGallery/CircularGallery';
+
 
 const BriefIntroduction = () => {
   const fadeInUp = {
@@ -23,7 +25,7 @@ const BriefIntroduction = () => {
             关于我
           </h2>
           <p className="text-gray-900 dark:text-white text-lg leading-relaxed">
-            一名充满激情的产品经理和半个程序员，致力于将创新想法转化为实际的产品解决方案。
+            一名产品经理和半个程序员，致力于将创新想法转化为实际的产品解决方案。
             在技术与产品的交叉领域中，找到了独特的平衡点。
           </p>
         </motion.div>
@@ -100,23 +102,41 @@ const BriefIntroduction = () => {
         {/* 最新项目展示 */}
         <motion.div 
           {...fadeInUp}
-          className="bg-white/35 dark:bg-white/10 backdrop-blur-lg rounded-xl p-8 shadow-xl border border-gray-200/20 dark:border-white/10 z-10"
+          className="h-[650px] w-full relative z-10"
         >
           <h3 className="text-2xl font-semibold mb-6 text-center text-orange-400">最新项目</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-4 bg-white/80 dark:bg-white/5 rounded-lg hover:bg-white/90 dark:hover:bg-white/10 transition-all duration-300">
-              <h4 className="text-lg font-semibold mb-2 text-orange-400">AI教育平台</h4>
-              <p className="text-gray-900 dark:text-white/90">设计开发多款AIGC工具，赋能高校教育教学及教师办公效率提升</p>
-            </div>
-            <div className="p-4 bg-white/80 dark:bg-white/5 rounded-lg hover:bg-white/90 dark:hover:bg-white/10 transition-all duration-300">
-              <h4 className="text-lg font-semibold mb-2 text-orange-400">XR虚拟展厅</h4>
-              <p className="text-gray-900 dark:text-white/90">为企业打造数字化展示平台，提供沉浸式体验解决方案</p>
-            </div>
-            <div className="p-4 bg-white/80 dark:bg-white/5 rounded-lg hover:bg-white/90 dark:hover:bg-white/10 transition-all duration-300">
-              <h4 className="text-lg font-semibold mb-2 text-orange-400">无人机虚拟仿真训练系统</h4>
-              <p className="text-gray-900 dark:text-white/90">为无人机相关专业学生提供基础训练，助力高校降本增效</p>
-            </div>
-          </div>
+          <CircularGallery
+            items={[
+              { 
+                image: "/最新项目/教学教育智能体平台.png",
+                text: "AI教育平台"
+              },
+              { 
+                image: "/最新项目/XR管线项目.png",
+                text: "XR管线项目"
+              },
+              { 
+                image: "/最新项目/无人机虚拟仿真.png",
+                text: "无人机虚拟仿真训练系统"
+              },
+              { 
+                image: "/最新项目/AI数字人.png",
+                text: "AI数字人"
+              },
+              { 
+                image: "/最新项目/AI绘图工坊.png",
+                text: "AI绘图工坊"
+              },
+              { 
+                image: "/最新项目/AI建筑效果图体验站.png",
+                text: "AI建筑效果图体验站"
+              }
+            ]}
+            bend={2}
+            textColor="#f97316"
+            borderRadius={0.05}
+            font="bold 24px DM Sans"
+          />
         </motion.div>
       </motion.div>
     </section>

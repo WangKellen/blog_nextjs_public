@@ -49,8 +49,8 @@ const LatestArticles = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-50">
         {articles.map((article) => (
           <Link href={`/blog/${article.id}`} key={article.id} className="block">
-            <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg shadow-xl rounded-xl overflow-hidden border border-gray-200/20 dark:border-white/10 transform hover:scale-105 transition-all duration-300">
-              <div className="relative w-full h-40">
+            <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg shadow-xl rounded-xl overflow-hidden border border-gray-200/20 dark:border-white/10 transform hover:scale-105 transition-all duration-300 h-[300px] flex flex-col">
+              <div className="relative w-full h-32 flex-shrink-0">
                 <Image
                   src={article.cover_image ? (article.cover_image.startsWith('http') ? article.cover_image : `http://127.0.0.1:8000${article.cover_image}`) : '/blog/default-cover.jpg'}
                   alt={article.title}
@@ -58,9 +58,9 @@ const LatestArticles = () => {
                   objectFit="cover"
                 />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-orange-400 mb-3">{article.title}</h3>
-                <p className="text-gray-900 dark:text-white/90 line-clamp-2">{article.content ? article.content.slice(0, 150).replace(/<[^>]+>/g, '') : ''}</p>
+              <div className="p-4 flex flex-col flex-grow">
+                <h3 className="text-lg font-bold text-orange-400 mb-2 line-clamp-2">{article.title}</h3>
+                <p className="text-gray-900 dark:text-white/90 line-clamp-2 text-sm flex-grow">{article.content ? article.content.slice(0, 150).replace(/<[^>]+>/g, '') : ''}</p>
               </div>
             </div>
           </Link>

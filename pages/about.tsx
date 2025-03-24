@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DotPattern } from '../components/magicui/dot-pattern';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,19 +8,7 @@ import { ShineBorder } from '../components/magicui/shine-border';
 import { Pointer } from "../components/magicui/pointer";
 import { motion, AnimatePresence } from "motion/react";
 
-function DotPatternDemo() {
-  return (
-    <div className="fixed inset-0 w-full h-full">
-      <DotPattern
-        className={cn(
-          "[mask-image:radial-gradient(2000px_circle_at_center,white,transparent)]",
-          "opacity-50"
-        )}
-        glow={false}
-      />
-    </div>
-  );
-}
+
 
 const AboutPage = () => {
   const [activeCards, setActiveCards] = useState({
@@ -42,7 +29,28 @@ const AboutPage = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-600 text-white">
       <div className="absolute inset-0">
-        <DotPatternDemo />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 opacity-80" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,165,0,0.1)_0%,transparent_70%)] animate-pulse" />
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_50%,transparent_75%)] bg-[length:20px_20px] animate-[grid_20s_linear_infinite]" />
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -inset-[10px] opacity-50">
+            {[...Array(50)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute rounded-full bg-orange-400/30 blur-xl"
+                style={{
+                  width: `${Math.random() * 4 + 1}rem`,
+                  height: `${Math.random() * 4 + 1}rem`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  transform: `scale(${Math.random() * 0.5 + 0.5})`,
+                  animation: `float ${Math.random() * 10 + 5}s linear infinite`,
+                  animationDelay: `${Math.random() * -10}s`
+                }}
+              />
+            ))}
+          </div>
+        </div>
       </div>
       <div className="container mx-auto px-4 py-16 relative z-10">
         <Link href="/" className="inline-block mb-8 px-6 py-3 bg-gradient-to-r from-orange-400 to-rose-400 rounded-full text-white font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
