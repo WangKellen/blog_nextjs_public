@@ -12,7 +12,7 @@ const aiApps = [
     title: 'AI健筑师',
     description: '智能生成个性化的健身和饮食计划，助你达成健康目标。',
     icon: '💪',
-    status: '在线运行',
+    status: '开发中',
     tags: ['健身规划', '营养指导', '个性化方案']
   },
   {
@@ -30,22 +30,6 @@ const aiApps = [
     icon: '💻',
     status: '规划中',
     tags: ['代码生成', '自动补全', '编程辅助']
-  },
-  {
-    id: 4,
-    title: 'COZE智能助手-AI健身助手',
-    description: 'COZE官方智能体运用自然语言交互技术，精准打造详尽的健身规划与饮食方案，全方位助力健康生活。',
-    icon: '🤖',
-    status: '在线运行',
-    tags: ['COZE', '智能体', '健身建议']
-  },
-  {
-    id: 5,
-    title: 'COZE智能助手-梗大师',
-    description: 'COZE官方智能体，凭借自然语言交互技术，为你完整呈现网络热梗，从此玩梗接梗，轻松拿捏！ ',
-    icon: '🐮',
-    status: '在线运行',
-    tags: ['COZE', '智能体', '健身建议']
   },
   // 更多AI应用...
 ];

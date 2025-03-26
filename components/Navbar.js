@@ -8,13 +8,13 @@ const Navbar = () => {
     <nav className="backdrop-blur-md bg-white/70 dark:bg-gray-900/30 shadow-lg fixed top-0 left-0 right-0 z-50 border-b border-gray-200/20 dark:border-white/10">
       <div className="container mx-auto px-4 py-2 flex items-center space-x-10 h-full">
         <Link href="/" className="text-xl font-bold text-gray-800 dark:text-white pt-1 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-rose-400">
-          WangKellen's Blog
+          KunLun's Blog
         </Link>
         <div className="flex-1 flex items-center">
           <div className="space-x-12 flex items-center h-full">
-            <Link href="/" className="text-2xl text-gray-800 dark:text-white/80 hover:text-orange-400 transition-colors duration-300 pt-1">
+            {/* <Link href="/" className="text-2xl text-gray-800 dark:text-white/80 hover:text-orange-400 transition-colors duration-300 pt-1">
               Home
-            </Link>
+            </Link> */}
             <Link href="/about" className="text-2xl text-gray-800 dark:text-white/80 hover:text-orange-400 transition-colors duration-300 pt-1">
               About
             </Link>
