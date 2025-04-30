@@ -2,6 +2,9 @@
 import Link from 'next/link';
 import { ScrollProgress } from "../components/magicui/scroll-progress";
 import { ThemeToggle } from './ThemeToggle';
+import { motion } from "framer-motion";
+
+
 
 const Navbar = () => {
   return (

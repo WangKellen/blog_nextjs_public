@@ -216,10 +216,19 @@ class Media {
     })
     const img = new Image()
     img.crossOrigin = "anonymous"
-    img.src = this.image
+    
+    // 确保图片URL是完整的绝对路径
+    const imageUrl = this.image.startsWith('http') ? this.image : `http://127.0.0.1:8000${this.image}`
+    img.src = imageUrl
+    
     img.onload = () => {
       texture.image = img
       this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight]
+    }
+    img.onerror = () => {
+      console.error(`Failed to load image: ${imageUrl}`)
+      // 加载失败时使用默认图片
+      img.src = 'https://picsum.photos/800/600?grayscale'
     }
   }
   createMesh() {
@@ -350,7 +359,7 @@ class App {
       { image: `https://picsum.photos/seed/12/800/600?grayscale`, text: "Palm Trees" }
     ]
     const galleryItems = items && items.length ? items : defaultItems
-    this.mediasImages = galleryItems.concat(galleryItems)
+    this.mediasImages = galleryItems
     this.medias = this.mediasImages.map((data, index) => {
       return new Media({
         geometry: this.planeGeometry,

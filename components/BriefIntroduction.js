@@ -1,10 +1,34 @@
 // components/BriefIntroduction.js
+import React from 'react';
 import { ShineBorder } from './magicui/shine-border';
 import { motion } from 'framer-motion';
 import CircularGallery from './CircularGallery/CircularGallery';
 
 
 const BriefIntroduction = () => {
+  const [projects, setProjects] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/projects/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setProjects(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -106,32 +130,10 @@ const BriefIntroduction = () => {
         >
           <h3 className="text-2xl font-semibold mb-6 text-center text-orange-400">最新项目</h3>
           <CircularGallery
-            items={[
-              { 
-                image: "/最新项目/教学教育智能体平台.png",
-                text: "AI教育平台"
-              },
-              { 
-                image: "/最新项目/XR管线项目.png",
-                text: "XR管线项目"
-              },
-              { 
-                image: "/最新项目/无人机虚拟仿真.png",
-                text: "无人机虚拟仿真训练系统"
-              },
-              { 
-                image: "/最新项目/AI数字人.png",
-                text: "AI数字人"
-              },
-              { 
-                image: "/最新项目/AI绘图工坊.png",
-                text: "AI绘图工坊"
-              },
-              { 
-                image: "/最新项目/AI建筑效果图体验站.png",
-                text: "AI建筑效果图体验站"
-              }
-            ]}
+            items={loading ? [] : projects.map(project => ({
+              image: project.image,
+              text: project.title
+            }))}
             bend={2}
             textColor="#f97316"
             borderRadius={0.05}
