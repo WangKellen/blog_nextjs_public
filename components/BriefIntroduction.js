@@ -3,7 +3,7 @@ import React from 'react';
 import { ShineBorder } from './magicui/shine-border';
 import { motion } from 'framer-motion';
 import CircularGallery from './CircularGallery/CircularGallery';
-
+import {API_BASE_URL} from '../api_result.js';
 
 const BriefIntroduction = () => {
   const [projects, setProjects] = React.useState([]);
@@ -13,7 +13,7 @@ const BriefIntroduction = () => {
   React.useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/projects/');
+        const response = await fetch( API_BASE_URL+'/api/projects/');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

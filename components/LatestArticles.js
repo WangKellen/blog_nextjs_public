@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { API_BASE_URL } from '../api_result.js';
 
 const LatestArticles = () => {
   const [articles, setArticles] = useState([]);
@@ -9,7 +10,7 @@ const LatestArticles = () => {
   useEffect(() => {
     const fetchLatestArticles = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/blog-posts/?limit=3');
+        const response = await fetch(API_BASE_URL+'/api/blog-posts/?limit=3');
         if (!response.ok) {
           throw new Error('Failed to fetch latest articles');
         }
@@ -52,7 +53,7 @@ const LatestArticles = () => {
             <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg shadow-xl rounded-xl overflow-hidden border border-gray-200/20 dark:border-white/10 transform hover:scale-105 transition-all duration-300 h-[300px] flex flex-col">
               <div className="relative w-full h-32 flex-shrink-0">
                 <Image
-                  src={article.cover_image ? (article.cover_image.startsWith('http') ? article.cover_image : `http://127.0.0.1:8000${article.cover_image}`) : '/blog/default-cover.jpg'}
+                  src={article.cover_image ? (article.cover_image.startsWith('http') ? article.cover_image : API_BASE_URL+`${article.cover_image}`) : '/blog/default-cover.jpg'}
                   alt={article.title}
                   layout="fill"
                   objectFit="cover"

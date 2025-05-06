@@ -13,6 +13,7 @@ import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { formatDistanceToNow } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
+import { API_BASE_URL } from '@/api_result';
 
 function DotPatternBackground() {
   return (
@@ -120,7 +121,7 @@ const BlogPost = () => {
     const fetchArticle = async () => {
       if (id) {
         try {
-          const response = await fetch(`http://127.0.0.1:8000/api/blog-posts/${id}`);
+          const response = await fetch(API_BASE_URL+`/api/blog-posts/${id}`);
           if (!response.ok) {
             throw new Error('Failed to fetch article');
           }
@@ -228,7 +229,7 @@ const BlogPost = () => {
             <div className="absolute inset-0 rounded-2xl overflow-hidden">
               <div className={`transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}>
                 <Image
-                  src={article.cover_image.startsWith('http') ? article.cover_image : `http://127.0.0.1:8000${article.cover_image}`}
+                  src={article.cover_image.startsWith('http') ? article.cover_image : API_BASE_URL+`${article.cover_image}`}
                   alt={article.title}
                   layout="fill"
                   objectFit="cover"
@@ -359,7 +360,7 @@ const BlogPost = () => {
                   // 处理图片路径
                   const imgSrc = src.startsWith('http') 
                     ? src 
-                    : `http://127.0.0.1:8000${src}`;
+                    : API_BASE_URL+`${src}`;
                   
                   return (
                     <div className="my-6 text-center">

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ScrollProgress } from '../../components/magicui/scroll-progress';
 import { RainbowButton } from '@/components/magicui/rainbow-button';
 import { useTheme } from 'next-themes';
+import { API_BASE_URL } from '@/api_result';
 
 // 文章分类数据
 const categories = [
@@ -93,7 +94,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
       <div className="flex flex-col h-full">
         <div className="relative h-48 w-full overflow-hidden">
           <Image
-            src={article.cover_image ? (article.cover_image.startsWith('http') ? article.cover_image : `http://127.0.0.1:8000${article.cover_image}`) : '/blog/default-cover.jpg'}
+            src={article.cover_image ? (article.cover_image.startsWith('http') ? article.cover_image : API_BASE_URL+`${article.cover_image}`) : '/blog/default-cover.jpg'}
             alt={article.title}
             layout="fill"
             objectFit="cover"
@@ -182,7 +183,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/tags/');
+        const response = await fetch(API_BASE_URL+'/api/tags/');
         if (!response.ok) {
           throw new Error('Failed to fetch tags');
         }
@@ -202,7 +203,7 @@ const BlogPage = () => {
   const fetchBlogPosts = async () => {
     setLoading(true);
     try {
-      let url = 'http://127.0.0.1:8000/api/blog-posts/';
+      let url = API_BASE_URL+'/api/blog-posts/';
       const params = new URLSearchParams();
       
       if (activeCategory !== 'all') {
